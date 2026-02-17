@@ -45,6 +45,15 @@ start	end	CTCF	REST	EP300
 • Script extracts 200 bp bins using TSV coordinates.
 
 ## 5. How to Run
+### 5.1 For MarkovCrossValidation.py : 
+•  Example workflow (for chr1, CTCF, k=5, m=6; see chr4 sample in output_for_chromosome_4):
+
+```text
+python tsv_download.py          # Enter 1 → chr1_200bp_bins.tsv
+python fasta_download.py        # Enter 1 → chr1.fasta
+python MarkovCrossValidation.py # Enter: chr1_200bp_bins.tsv, CTCF, 5, 6
+```
+
 • Run from repo root/terminal (after downloading data):
 
 ```text
@@ -56,36 +65,54 @@ Follow interactive prompts:
  Markov order m: 0–10.
 ```
 
-Example workflow (for chr1, CTCF, k=5, m=6; see chr4 sample in output_for_chromosome_4):
+### 5.2 For simpler_version.py :
+• Example workflow (chr1, m=6):
 
-```text
-python tsv_download.py          # Enter 1 → chr1_200bp_bins.tsv
-python fasta_download.py        # Enter 1 → chr1.fasta
-python MarkovCrossValidation.py # Enter: chr1_200bp_bins.tsv, CTCF, 5, 6
 ```
-## 6. What the Script Does
-• Obtains the FASTA sequences of the bins in the tsv file
+text
+python fasta_download.py        # Enter 1 → chr1.fasta
+python simpler_version.py       # Enter: chr1.fasta, 6
+```
 
-• Segregates the bins into 'bound' and 'unbound' groups based on the TF of interest
+• Run from repo root/terminal (after downloading FASTA):
 
-• Randomly divides the bins into 'k' buckets such that each bucket gets roughly equal number of bins
+```
+text
+python simpler_version.py
+Interactive prompts: FASTA filename (e.g., chr1.fasta)
+                     Markov order m (integer 0–10).
+```
 
-• Lists which contains all possible 'm+1 mers'
+## 6. What the Script Does:
 
-• Counts all the occurences of m+1 mers in the bins
+• Obtains FASTA sequences for TSV bins
 
-• Builds the Transition Probability Matrix
+• Segregates bins into bound/unbound by TF
 
-• Trains the model on k-1 buckets and uses the remaining 1 for cross-validation
+• Randomly divides bins into k equal buckets
 
-• Constructs the ROC and Precision-Recall Curves for all 'k' folds
+• Generates all possible m+1 mers
+
+• Counts m+1 mer occurrences in bins
+
+• Builds transition probability matrix
+
+• Trains on k-1 folds, tests 1 held-out fold
+
+• Plots ROC/PR curves for all k folds
 
 ## 7. Outputs
+### 7.1 For MarkovCrossValidation.py :
  --Console: Bin counts, fold progress, total execution time .
 
  --Plots: ROC_Curves_for_{k}_fold_validation_for_order_{m}.png + Precision-Recall_Curves_for_{k}_fold_validation_for_order_{m} (in png format).
  
  --Sample: output_for_chromosome_4 (chr4 ROC_3.png, PR_3.png, chr4_results_summary.txt).
+
+ ### 7.2 For simpler_version.py :
+   --Console: Training progress, score file name.
+
+   --log_likelihood_scores_for_order{m}.txt: Log-prob scores per sequence line 
 
 ## 8. Installation
 ```text
