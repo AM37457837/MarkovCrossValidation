@@ -30,7 +30,7 @@ start	end	CTCF	REST	EP300
 0	200	B	U	U
 ```
 ### 4.2 FASTA file
-Named chrX.fasta in same directory. Script extracts 200 bp bins using TSV coordinates.
+Named chr(num).fasta in same directory. Script extracts 200 bp bins using TSV coordinates.
 
 ## 5. How to Run
 Run from repo root/terminal (after downloading data):
