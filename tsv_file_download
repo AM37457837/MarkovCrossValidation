@@ -1,0 +1,38 @@
+import gdown
+chr_num = int(input("enter chromosome number(1-22):"))
+
+file_map = {
+    1: "1GVRXwTCaVlp5So3gsrn0T-J7bD-jschu",
+    2: "1ChXTsiNlOo1IOam3YPZBB9qCmQlBbUcR",
+    3: "1bykkDM0u0kGWYk5EeGnkQubpMbCVgAmq",
+    4: "1aGvz0H1mSk1ToYZpiGHkCzp1QJUU8voe",
+    5: "1E3XrWi9tZG5dA3Pz90ATN5xHy2Tq8vtO",
+    6: "1T7PQ33hy4OBQRkeJd6ZUZc_X4rFHcUiC",
+    7: "1_-0W0t7ATR1mP_bDLwFdCoKHa1effdXw",
+    8: "1Ex2xg79b4M__LNPO0FplOhzihlgx0A6g",
+    9: "1tJ656IpGV2hV-ZstbYcJwe--vRHq1OLf",
+    10: "1cfwgxh51oZ24rk2tqY_iPVmuxNpdz-uF",
+    11: "1ecX0PemaxlO0a9sD4MzqCh_rooE9Nz8D",
+    12: "1BGE21_pvIRVbDhbIZe2H578mNUlsUp7N",
+    13: "11i6j3rSTfjnlogA70DeD9osN2c9lHNXL",
+    14: "1KizU5iDdpfYr3vDgQM7s7JdmyrlDbOS7",
+    15: "1-jeAGoyq-4A3UnGGyClULSyEljoPnwy3",
+    16: "1aedljSHIdkrBKgf73aP_opVt_NTVzJVY",
+    17: "1Wu9U429dvcq6XrGu8AyQaHRbUowc9kb4",
+    18: "1Y1NfoBpC0v9q3TKLTbem_8BwCeXUTE-a",
+    19: "1C7dDDAFHV9iQe2CWa3t1f-vNQXXPF0jK",
+    20: "1mimOp-i0QCoIQLctG6KSbewruE-OTxjq",
+    21: "11as8yJ0ukGIsO5d2tZWFUbRv6EJa83PY",
+    22: "1gdQUKWpNpJmvOAXPbYb9XcJfQhZ8YQcU"
+}
+
+
+if chr_num in file_map:
+    file_id = file_map[chr_num]
+    print(f"Targeting File ID: {file_id}")
+    
+    # Download the specific file
+    # output=None lets gdown determine the original filename
+    gdown.download(id=file_id, output=None, quiet=False)
+else:
+    print(f"Error: No file found for key '{choice}'. Please enter a number between 1 and 22.")
