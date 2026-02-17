@@ -1,0 +1,58 @@
+import urllib.request
+import urllib.parse
+
+# Your chr_map remains the same...
+chr_map = {
+    '1': 'NC_000001.11', '2': 'NC_000002.11', '3': 'NC_000003.11', '4': 'NC_000004.12',
+    '5': 'NC_000005.10', '6': 'NC_000006.12', '7': 'NC_000007.14', '8': 'NC_000008.11',
+    '9': 'NC_000009.12', '10': 'NC_000010.11', '11': 'NC_000011.10', '12': 'NC_000012.12',
+    '13': 'NC_000013.11', '14': 'NC_000014.9', '15': 'NC_000015.10', '16': 'NC_000016.10',
+    '17': 'NC_000017.11', '18': 'NC_000018.10', '19': 'NC_000019.10', '20': 'NC_000020.11',
+    '21': 'NC_000021.9', '22': 'NC_000022.11', 'X': 'NC_000023.11', 'Y': 'NC_000024.10'
+}
+chr_num = input("Enter chromosome number (1-22): ").strip()
+
+if chr_num in chr_map:
+    accession = chr_map[chr_num]
+    
+    print(f"Downloading Chromosome {chr_num} ({accession})...")
+    
+    # Step 1: esearch to get UID (use db=nuccore for RefSeq)
+    esearch_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+    params_esearch = {
+        "db": "nuccore",
+        "term": accession,
+        "retmax": "1",
+        "rettype": "xml"
+    }
+    esearch_data = urllib.parse.urlencode(params_esearch).encode()
+    with urllib.request.urlopen(esearch_url, esearch_data) as resp:
+        esearch_xml = resp.read().decode()
+    
+    # Extract Id (simple string find; for production use xml.etree.ElementTree)
+    id_start = esearch_xml.find("<Id>") 
+    id_end = esearch_xml.find("</Id>", id_start)
+    uid = esearch_xml[id_start+4:id_end] if id_start != -1 else None
+    
+    if uid:
+        # Step 2: efetch FASTA
+        efetch_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
+        params_efetch = {
+            "db": "nuccore",
+            "id": uid,
+            "rettype": "fasta",
+            "retmode": "text"
+        }
+        efetch_data = urllib.parse.urlencode(params_efetch).encode()
+        
+        with urllib.request.urlopen(efetch_url, efetch_data) as resp:
+            fasta_data = resp.read()
+        
+        with open(f"chr{chr_num}.fasta", "wb") as f:
+            f.write(fasta_data)
+        
+        print("Done!")
+    else:
+        print("Failed to find UID.")
+else:
+    print("Chromosome not in map.")
