@@ -1,0 +1,5 @@
+pip install pandas
+pip install biopython
+pip install matplotlib
+pip install scikit.learn
+pip install gdown
