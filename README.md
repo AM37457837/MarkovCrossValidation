@@ -3,7 +3,9 @@
 
 ## 1. Requirements
  • Language: Python 3.8+
+ 
  • Python libraries: pandas, biopython, matplotlib, scikit-learn, gdown
+ 
  • Install via: pip install pandas biopython matplotlib scikit-learn gdown
 
 ## 2. File Structure
@@ -28,18 +30,23 @@
 
 ## 4. Input Format
 ### 4.1 TSV file
+
 Named chr(num)_200bp_bins.tsv. Columns: start , end, CTCF (B/U), REST (B/U), EP300 (B/U).
+
 Example header:
+
 ```text
 start	end	CTCF	REST	EP300
 0	200	B	U	U
 ```
 ### 4.2 FASTA file
 • Named chr(num).fasta in same directory. 
+
 • Script extracts 200 bp bins using TSV coordinates.
 
 ## 5. How to Run
 • Run from repo root/terminal (after downloading data):
+
 ```text
 python MarkovCrossValidation.py
 Follow interactive prompts:
@@ -49,7 +56,7 @@ Follow interactive prompts:
  Markov order m: 0–10.
 ```
 
-Example workflow (for chr1, CTCF, k=5, m=6; see chr4 sample in output_for_chromosome_4/):
+Example workflow (for chr1, CTCF, k=5, m=6; see chr4 sample in output_for_chromosome_4):
 
 ```text
 python tsv_download.py          # Enter 1 → chr1_200bp_bins.tsv
@@ -58,17 +65,26 @@ python MarkovCrossValidation.py # Enter: chr1_200bp_bins.tsv, CTCF, 5, 6
 ```
 ## 6. What the Script Does
 • Obtains the FASTA sequences of the bins in the tsv file
+
 • Segregates the bins into 'bound' and 'unbound' groups based on the TF of interest
+
 • Randomly divides the bins into 'k' buckets such that each bucket gets roughly equal number of bins
+
 • Lists which contains all possible 'm+1 mers'
+
 • Counts all the occurences of m+1 mers in the bins
+
 • Builds the Transition Probability Matrix
+
 • Trains the model on k-1 buckets and uses the remaining 1 for cross-validation
+
 • Constructs the ROC and Precision-Recall Curves for all 'k' folds
 
 ## 7. Outputs
  --Console: Bin counts, fold progress, total execution time .
+
  --Plots: ROC_Curves_for_{k}_fold_validation_for_order_{m}.png + Precision-Recall_Curves_for_{k}_fold_validation_for_order_{m} (in png format).
+ 
  --Sample: output_for_chromosome_4 (chr4 ROC_3.png, PR_3.png, chr4_results_summary.txt).
 
 ## 8. Installation
@@ -79,5 +95,7 @@ pip install pandas biopython matplotlib scikit-learn gdown
 ```
 ## 9. Notes/Limitations
  Supports CTCF/REST/EP300 only .
+ 
  Assumes exact 200 bp bins, matching TSV/FASTA coords.
+ 
  Chr 1-22 only; simpler_version.py for quick tests.
