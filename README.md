@@ -18,11 +18,13 @@
 └── README.md
 ```
 ## 3. Data Download
-• FASTA (chr1.fasta to chr22.fasta): Run python fasta_download.py, enter chromosome number (1-22).( Downloads from NCBI using RefSeq accessions.)
+• FASTA (chr1.fasta to chr22.fasta): Run python fasta_download.py, enter chromosome number (1-22).
+( Downloads from NCBI using RefSeq accessions.)
 
-• TSV (chr1_200bp_bins.tsv to chr22_200bp_bins.tsv): Run python tsv_download.py, enter chromosome number (1-22).( Downloads via gdown from shared Google Drive files.)
+• TSV (chr1_200bp_bins.tsv to chr22_200bp_bins.tsv): Run python tsv_download.py, enter chromosome number (1-22).
+( Downloads via gdown from shared Google Drive files.)
 
-• Place files in working directory (or current folder) before running main script. Paths are relative—no absolutes used.
+• Place files in working directory (or current folder) before running main script. 
 
 ## 4. Input Format
 ### 4.1 TSV file
@@ -41,10 +43,10 @@ start	end	CTCF	REST	EP300
 ```text
 python MarkovCrossValidation.py
 Follow interactive prompts:
-TSV filename (e.g., chr1_200bp_bins.tsv).
-TF: CTCF, REST, or EP300.
-Folds k: 3–5.
-Markov order m: 0–10.
+ TSV filename (e.g., chr1_200bp_bins.tsv)
+ TF: CTCF, REST, or EP300.
+ Folds k: 3–5.
+ Markov order m: 0–10.
 ```
 
 Example workflow (for chr1, CTCF, k=5, m=6; see chr4 sample in output_for_chromosome_4/):
@@ -58,11 +60,11 @@ python MarkovCrossValidation.py # Enter: chr1_200bp_bins.tsv, CTCF, 5, 6
 • Obtains the FASTA sequences of the bins in the tsv file
 • Segregates the bins into 'bound' and 'unbound' groups based on the TF of interest
 • Randomly divides the bins into 'k' buckets such that each bucket gets roughly equal number of bins
-• List which contains all possible 'm+1 mers'
-• Counting all the occurences of m+1 mers in the bins
-• Building the Transition Probability Matrix
-• Training the model on k-1 buckets and using the remaining 1 for cross-validation
-• Constructing the ROC and Precision-Recall Curves for all 'k' folds
+• Lists which contains all possible 'm+1 mers'
+• Counts all the occurences of m+1 mers in the bins
+• Builds the Transition Probability Matrix
+• Trains the model on k-1 buckets and uses the remaining 1 for cross-validation
+• Constructs the ROC and Precision-Recall Curves for all 'k' folds
 
 ## 7. Outputs
  --Console: Bin counts, fold progress, total execution time .
