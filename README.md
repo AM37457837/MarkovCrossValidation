@@ -84,6 +84,7 @@ Interactive prompts: FASTA filename (e.g., chr1.fasta)
 ```
 
 ## 6. What the Script Does:
+### 6.1 For MarkovCrossValidation.py :
 
 • Obtains FASTA sequences for TSV bins
 
@@ -100,6 +101,18 @@ Interactive prompts: FASTA filename (e.g., chr1.fasta)
 • Trains on k-1 folds, tests 1 held-out fold
 
 • Plots ROC/PR curves for all k folds
+
+### 6.2 For simpler_version.py :
+
+• Generates all m+1-mers.
+
+• Builds Markov model (pseudo-count=1) on all sequences.
+
+• Computes transition matrix.
+
+• Scores each seq via sliding window log P(seq).
+
+• Saves scores to TXT.
 
 ## 7. Outputs
 ### 7.1 For MarkovCrossValidation.py :
